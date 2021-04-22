@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheckSquare, faSquare, faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
 
-const Tarea = ( {tarea, toggleCompletada} ) => {
+const Tarea = ( {tarea, toggleCompletada, editarTarea, borrarTarea} ) => {
     const [editandoTarea, cambiarEditandoTarea] = useState(false); //Estado para editar tareas
     const [nuevaTarea, cambiarNuevaTarea] =useState(tarea.texto);      //Estado para inputs, los inputs siempre se trabajan con estados.
     
     const handleSubmit = (e) => { //Funcion que se ejecuta cada vez que se presiona enviar un formulario, evita que se pierda la informacion al refrescar
           e.preventDefault();
+          editarTarea(tarea.id, nuevaTarea);
           cambiarEditandoTarea(false);
     }    
 
@@ -51,6 +52,7 @@ const Tarea = ( {tarea, toggleCompletada} ) => {
                  <FontAwesomeIcon 
                     icon= {faTimes} 
                     className="lista-tareas__icono lista-tareas__icono-accion"
+                    onClick= {() => borrarTarea(tarea.id)}
                 />
             </div>
             
