@@ -20,13 +20,22 @@ const App = () => {
     ]
   );
 
+  const [mostrarCompletadas, cambiarMostrarCompletadas] = useState(false); //aqui se define mostrarCompletadas como una funcion de ferdadero o falso mediante useState, useState es 
+
   console.log(tareas);
 
   return (
     <div className="contenedor">
-      <Header />
+      <Header 
+        mostrarCompletadas= {mostrarCompletadas} 
+        cambiarMostrarCompletadas = {cambiarMostrarCompletadas}
+      />
       <FormularioTareas tareas={tareas} cambiarTareas={cambiarTareas} />
-      <ListaTareas tareas= {tareas} cambiarTareas={cambiarTareas} />
+      <ListaTareas 
+        tareas= {tareas} 
+        cambiarTareas={cambiarTareas} 
+        mostrarCompletadas= {mostrarCompletadas}
+      />
     </div>
   );
 }
