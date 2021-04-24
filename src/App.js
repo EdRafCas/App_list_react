@@ -5,24 +5,41 @@ import FormularioTareas from'./componentes/FormularioTareas';
 import ListaTareas from  './componentes/ListaTareas';
 
 const App = () => {
-  
+  //obtenemos tareas guardadas de localstorage
   const tareasGuardadas = 
-  localStorage.getItem("tareas") ?   JSON.parse(localStorage.getItem("tareas")) : []; //si en localStorage (que es como el caché) hay algo, lo carga, si no, carga un arreglo vacio, 
+  localStorage.getItem("tareas") ?
+  JSON.parse(localStorage.getItem("tareas")) : []; 
+  //si en localStorage (que es como el caché) hay algo, lo carga, si no, carga un arreglo vacio, 
   //el metodo JSON.PARSE es lo opuesto de stringify, toma los elementos en cadena de texto y los convierte en un arreglo, 
 
-  const [tareas, cambiarTareas] = useState (tareasGuardadas); //es necesario comenzar con un arreglo vacio, o en su defecto elementos de localstorage, si no, da error
-  console.log(tareas)
+  //Establecemos el estado de las tareas
+  const [tareas, cambiarTareas] = useState (tareasGuardadas); 
+  //es necesario comenzar con un arreglo vacio, o en su defecto elementos de localstorage, si no, da error
 
+  //Guardamos el estado dentro de localstorage
   useEffect(()=>{
-    //aqui va el codigo que quieres ejecutar, pero solo queremos ejecutarlo cuando el estado de tareas cambien
     //localStorage.setITem es un metodo para guardar cosas en almacenamiento local 
     //el metodo JSON.stringify convierte el contenido () en una cadena de texto, de esta forma se puede guardar en localstorage
     localStorage.setItem("tareas", JSON.stringify(tareas)) 
-    }, [tareas]); // colocar ", [tareas]" hace que se ejecute SOLO UNA VEZ o cuando LAS TAREAS CAMBIEN
+    }, [tareas]);
+    // colocar ", [tareas]" hace que se ejecute SOLO UNA VEZ o cuando LAS TAREAS CAMBIEN
 
-  const [mostrarCompletadas, cambiarMostrarCompletadas] = useState(true); //aqui se define mostrarCompletadas como una funcion de ferdadero o falso mediante useState, useState es 
+  //accedemos a MostrarCompletadas y comprobabmos si es null o contiene un valor
+  let configMostrarCompletadas = "";
+  if(localStorage.getItem("mostrarCompletadas") === null) {
+    configMostrarCompletadas = true;
+  } else {
+    configMostrarCompletadas = localStorage.getItem("mostrarCompletadas") === "true";
+  }
+  
+
+  //aqui se define mostrarCompletadas como una funcion de verdadero o falso mediante useState   
+  const [mostrarCompletadas, cambiarMostrarCompletadas] = useState(configMostrarCompletadas); 
+
+
+
   useEffect(()=>{
-    localStorage.setItem("mostrarCompletadas", mostrarCompletadas.toString)
+    localStorage.setItem("mostrarCompletadas", mostrarCompletadas.toString())
     }, [mostrarCompletadas]);
 
   console.log(tareas);
