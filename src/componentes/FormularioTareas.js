@@ -23,6 +23,7 @@ const FormularioTareas = ({tareas, cambiarTareas}) => {
                 }
             ]
         )
+        cambiarInputTarea("");
     }
 
     return (  
